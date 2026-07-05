@@ -22,7 +22,7 @@ The skill is defined entirely in **SKILL.md**. Edit this to change the annotatio
 
 1. Clone the repo into your skills directory:
    ```bash
-   git clone https://github.com/yuenshingyan/explain-code-claude-skill ~/.claude/skills/explain-code
+   git clone https://github.com/yuenshingyan/explain-code ~/.claude/skills/explain-code
    ```
 2. Make your changes to `SKILL.md`.
 3. Open any project in Claude Code, make some code changes, and ask Claude to annotate them.
