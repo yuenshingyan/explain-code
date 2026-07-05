@@ -17,13 +17,13 @@ Clone this repo directly into your Claude Code skills directory:
 **macOS / Linux:**
 
 ```bash
-git clone https://github.com/yuenshingyan/explain-code-claude-skill ~/.claude/skills/explain-code
+git clone https://github.com/yuenshingyan/explain-code ~/.claude/skills/explain-code
 ```
 
 **Windows (PowerShell):**
 
 ```powershell
-git clone https://github.com/yuenshingyan/explain-code-claude-skill "$env:USERPROFILE\.claude\skills\explain-code"
+git clone https://github.com/yuenshingyan/explain-code "$env:USERPROFILE\.claude\skills\explain-code"
 ```
 
 That's it. Claude Code auto-discovers skills in `~/.claude/skills/` (`%USERPROFILE%\.claude\skills\` on Windows).
