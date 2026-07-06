@@ -7,6 +7,9 @@ when_to_use: >-
 effort: high
 allowed-tools:
   - Read
+  - Bash(git status *)
+  - Bash(git diff *)
+  - Bash(git log *)
 ---
 
 ## Code Explanations
@@ -19,6 +22,18 @@ Every line anchor MUST be a clickable markdown link that jumps to the referenced
 - Single line: `[L24](src/auth/session.py#L24)`
 
 Never write a bare `**L12–18**` — an anchor that can't be clicked defeats the purpose.
+
+### Determine the diff first
+
+Never infer "changes" from a single read of the current file — establish the actual diff before writing a single bullet:
+
+- `git status --porcelain -- <file>` — if the file is untracked (`??`), it's entirely new; every line is in scope.
+- Otherwise, `git diff HEAD -- <file>` — covers staged and unstaged edits together against the last commit.
+- If that's empty, fall back to the most recent commit that touched the file: `git log -1 -p --cc -- <file>`.
+- If none of these turns up an actual line-level hunk — not a git repo, no history for the file, a binary file, a pure rename with no content change — say so plainly and stop. Do not fall back to a whole-file walkthrough.
+- If the diff contains unresolved merge-conflict markers (`<<<<<<<`/`=======`/`>>>>>>>`), flag that instead of narrating them as ordinary changes.
+
+Use the new-file side of each hunk header (`@@ -a,b +c,d @@`) for line numbers, confirmed against a Read of the current file rather than a manual recount. Anchor a pure removal (no surviving line) to the current-file line immediately adjacent to where it used to sit.
 
 ### Format
 
@@ -47,6 +62,7 @@ Never write a bare `**L12–18**` — an anchor that can't be clicked defeats th
 
 ### Rules
 
+- Only bullet lines confirmed as additions or modifications by the diff — never explain unchanged code, no matter how noteworthy it looks.
 - Walk the file top to bottom; keep bullets in source-line order.
 - Anchor every bullet to a line or range as a clickable markdown link (workspace-relative path with `#L…` fragment); name the enclosing symbol (function, class, method) when the range maps to one.
 - Explain what changed and why it matters — not a syntax narration ("added an if-statement").
