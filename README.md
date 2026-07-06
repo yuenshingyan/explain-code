@@ -1,14 +1,14 @@
 # explain-code
 
-A Claude Code skill that annotates code changes with structured WHY/HOW/WHEN comment blocks explaining the reasoning, approach, and runtime conditions of each non-trivial change.
+A Claude Code skill that explains code changes as a line-anchored walkthrough in chat — every bullet links straight to the lines it describes.
 
 ## Features
 
-- **Structured commentary**: Three labeled sections — WHY (the problem), HOW (the approach), WHEN (the runtime conditions)
-- **Language-native syntax**: Uses correct comment syntax for Python, Ruby, JS/TS, Go, Rust, Java, CSS, HTML, and more
-- **Multi-file handling**: Full block at the primary change site; concise cross-references at secondary sites
-- **Smart omission rules**: Skips blocks for trivial changes (typo fixes, formatting, generated code, self-evident renames)
-- **Specificity enforced**: Names real functions, endpoints, config keys, and ticket IDs — never vague labels like "the handler"
+- **Diff-first**: Never narrates a whole file from a single read — establishes the actual diff (`git status`/`git diff`/`git log -p`) before writing a single bullet, and says so plainly if there's no diff to explain
+- **Clickable line anchors**: Every bullet links to its exact lines (`file.py#L12-L18`), so you can jump straight to the code
+- **Top-to-bottom walkthrough**: One bullet per logical change, grouped by contiguous lines, in source order, with the enclosing function/class named when relevant
+- **Explains why it matters**: Describes the effect of a change, not a syntax narration
+- **Skips trivia**: Omits formatting, typo fixes, and self-evident renames rather than padding the list
 
 ## Install
 
@@ -58,16 +58,4 @@ Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\skills\explain-code"
 
 ## Usage
 
-After making code changes, use one of:
-
-- "explain this change"
-- "add code commentary"
-- "annotate my changes"
-- "add WHY/HOW comments"
-- "document why I changed this"
-
-Claude will read the changed code, identify non-trivial changes, and add structured WHY/HOW/WHEN blocks directly above each change using the file's native comment syntax.
-
-## License
-
-MIT
+Run `/explain-code` on a file to get a summary and a line-anchored bullet list of what changed in it.
